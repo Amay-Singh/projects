@@ -1,0 +1,45 @@
+create table flight(
+   fid number,
+    name varchar(20),
+    serialno number,
+    frm varchar(20),
+    tdest varchar(20),
+    doj varchar(10)
+    );
+	alter table flight add constraint pk10 primary key (serialno);
+	
+ create sequence flight_seq start with 1;
+ create trigger trg_flight
+    before insert on flight
+    for each row
+    begin
+    select flight_seq.nextval
+    into :new.fid
+    from dual;
+    end;
+    /
+  
+   create table cust(
+   custid int,
+   custmail varchar(30),
+   name varchar(20),
+   age int,
+   hpas varchar(50),
+   state varchar(20),
+   stat char(1),
+   mobno number(11),
+   adr varchar(50),
+   gender char(1)
+ );	
+  alter table cust add constraint pk1 primary key (custmail);
+
+ create sequence custid_seq start with 1;
+ create trigger trg_custid
+    before insert on cust
+    for each row
+    begin
+    select custid_seq.nextval
+    into :new.custid
+    from dual;
+    end;
+    /

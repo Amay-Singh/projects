@@ -1,0 +1,107 @@
+<!Doctype HTML>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!--Makes the text responsive by setting view port-->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class= "align-items-center">
+        <center><b><u><div class="text-align-center fs-1 ">Currency Converter App!</div></u></b></center>
+    </div>
+    <div class="section mx-5">
+            <form name="currencyExchange">
+                <div class="row align-items-center">
+                    <div class="fs-1 col-12">From:</div>
+                    <div class="col-4">
+                        <input type="number" name="amount" placeholder="Enter the Amount" id="amount" class="form-control border-success">
+                    </div>
+                    <div class=" col-8">
+                        <select name="fromCurrency" id="from" class="form-control form-select border-success">
+                            <option value="EUR">Euros</option>
+                            <option value="GBP">British Pound Sterling</option>
+                            <option value="HKD">Hong Kong Dollar</option>
+                            <option value="INR">Indian Rupee</option>
+                            <option value="IDR">Indonesian Rupiah</option>
+                            <option value="CAD">Canadian Dollar</option>
+                            <option value="AED">United Arab Emirates Dirham</option>
+                            <option value="RUB">Russian Ruble</option>
+                            <option value="SGD">Singapore Dollar	</option>
+                            <option value="CHF">Swiss Franc</option>
+                            <option value="MYR">Malaysian Ringgit</option>
+                            <option value="JPY">Japanese Yen</option>
+                            <option value="CNY">Chinese Yuan Renminbi</option>
+                            <option value="USD">United States Dollar</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="fs-1 col-12">To:</div>
+                    
+                        <div class="col-4">
+                            <input type="number" name="convertedAmount" readonly placeholder="Converted" id="convertedAmount"  class="form-control border-success">
+                        </div>
+                        <div class=" col-8">
+                            <select name="fromCurrency" id="to" class="form-control form-select border-success">
+                                <option value="EUR">Euros</option>
+                                <option value="GBP">British Pound Sterling</option>
+                                <option value="HKD">Hong Kong Dollar</option>
+                                <option value="INR">Indian Rupee</option>
+                                <option value="IDR">Indonesian Rupiah</option>
+                                <option value="CAD">Canadian Dollar</option>
+                                <option value="AED">United Arab Emirates Dirham</option>
+                                <option value="RUB">Russian Ruble</option>
+                                <option value="SGD">Singapore Dollar</option>
+                                <option value="CHF">Swiss Franc</option>
+                                <option value="MYR">Malaysian Ringgit</option>
+                                <option value="JPY">Japanese Yen</option>
+                                <option value="CNY">Chinese Yuan Renminbi</option>
+                                <option value="USD">United States Dollar</option>
+                            </select>
+                        </div>
+                    
+                    <div class="col-6 mt-5">
+                        <button type="button" id="convert" class="btn btn-success btn-lg">Convert</button>
+                    </div>
+                </div>
+            </form>
+        
+    </div>
+</body>
+<script>
+    $("#convert").click(function(){ 
+       
+        const endpoint = 'latest';
+        const access_key = '5562d23c01cacaeda201ef91a2ce2aff';
+
+        // from currency, to currency, and amount
+        let from = document.getElementById('from').value;
+       // console.log(from);
+        //let from = select.options[select.selectedIndex].value;
+        let to = document.getElementById('to').value;
+        //console.log(to);
+        //let to = select.options[select.selectedIndex].value;
+        let amount = document.getElementById('amount').value;
+        let convertedAmount = 0.0;
+        let rate = 0.0;
+        //console.log(amount);
+        // execute the conversion using the "convert" endpoint:
+        $.ajax({
+            url: 'http://api.exchangeratesapi.io/v1/' + endpoint + '?access_key=' + access_key,dataType: 'jsonp',  
+            success: function(json) {
+                console.log(from);
+                rate = 1/json.rates[from];
+                //alert(rate);
+                convertedAmount = amount * rate;
+                console.log(to);
+                rate = json.rates[to];
+                //alert(rate);
+                console.log(rate);
+                convertedAmount *= rate;
+                document.getElementById("convertedAmount").value=convertedAmount;
+                //alert(convertedAmount);
+            }
+        });
+    });
+</script>
+</html>

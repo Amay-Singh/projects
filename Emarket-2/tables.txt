@@ -1,0 +1,89 @@
+ create table cust(
+   custid int,
+   custmail varchar(30),
+   name varchar(20),
+   age int,
+   hpas varchar(50),
+   state varchar(20),
+   stat char(1),
+   mobno number(11),
+   adr varchar(50),
+   gender char(1)
+ );	
+  alter table cust add constraint pk1 primary key (custmail);
+//trigger for the auto increment filed in cust
+ create sequence custid_seq start with 1;
+ create trigger trg_custid
+    before insert on cust
+    for each row
+    begin
+    select custid_seq.nextval
+    into :new.custid
+    from dual;
+    end;
+    /
+ 
+ SQL> create table ord(
+  2  ordid int,
+  3  bid int,
+  4  sid int,
+  5  ordno int,
+  6  itid int,
+  7  qnty int,
+  8  odate date,
+  9  stat int
+ 10  );
+ 
+ 
+ SQL> create table stat(
+  2  stid int,
+  3  stdesc varchar(20)
+  4  );
+  
+  insert into  stat values (0,'placed');
+  insert into  stat values (1,'processed');
+  insert into  stat values (2,'delivered');
+  
+   create table items(
+    sid int,
+    itid int,
+    qty int,
+	price int
+   );
+  
+  SQL> create table cities(
+  2  citid int,
+  3  citnam varchar(20)
+  4  );
+  
+   create table rating(
+  2  ratid int,
+  3  sid int,
+  4  rating int
+  5  );
+  
+ alter table ord add constraint pk2 primary key (ordno);
+ alter table stat add constraint pk3 primary key (stid);
+ alter table cities add constraint pk5 primary key (citid);
+ alter table rating add constraint pk6 primary key (ratid);
+
+ alter table items add constraint p8 primary key(itid);
+
+ 
+ create table categories(
+  cid int,
+  cdesc varchar(20)
+  );
+  alter table categories add constraint pk7 primary key (cid);
+ 
+ 
+ 
+ insert into categories values(1,'Vegetables');
+ insert into categories values(2,'Fruit');
+ insert into categories values(3,'Dairy Products');
+ insert into categories values(4,'Organic Products');
+ insert into categories values(5,'Home Essentials');
+ insert into categories values(6,'Juices');
+ insert into categories values(7,'Baked');
+ 
+ 

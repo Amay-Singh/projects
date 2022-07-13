@@ -1,0 +1,6 @@
+<?php
+ $conn=oci_connect("SYSTEM","30xx525","localhost/orcl");
+ $s=oci_parse($conn,$query);
+ oci_execute($s);
+ oci_fetch_all($s,$res);
+?>
